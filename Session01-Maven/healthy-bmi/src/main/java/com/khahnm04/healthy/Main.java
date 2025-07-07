@@ -1,4 +1,4 @@
-package com.khahnm04.heath;
+package com.khahnm04.healthy;
 
 import com.khahnm04.heath.core.BmiCalculator;
 
