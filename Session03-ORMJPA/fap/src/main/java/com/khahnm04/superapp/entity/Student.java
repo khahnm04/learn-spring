@@ -5,7 +5,8 @@ package com.khahnm04.superapp.entity;
 //import jakarta.persistence.Id;
 //import jakarta.persistence.Table;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Nationalized;
+
+//import org.hibernate.annotations.Nationalized;
 
 // Class này sẽ dc khai báo để ánh xạ/biến đổi tương đương, map thành table tương ứng
 @Entity
@@ -13,12 +14,15 @@ import org.hibernate.annotations.Nationalized;
 public class Student {
 
     @Id
-    @Column(name = "Id") // nếu ko có khai báo này thì mặc định lấy tên field là tên cột
+    @Column(name = "Id", columnDefinition = "CHAR(8)") // nếu ko có khai báo này thì mặc định lấy tên field là tên cột
     private String id; // camelCase, id tự nhập (id tự tăng tính sau)
 
-    @Column(name = "Name",  nullable = false, length = 50)
-    @Nationalized // Thiếu khai báo này thì spring sẽ biến thành varchar -> ko lưu dc tiếng việt có dấu. Để String là nvarchar thì cần thêm khai báo @Nationalized
+    @Column(name = "Name",  nullable = false, length = 50, columnDefinition = "NVARCHAR(50)")
+    // @Nationalized // Thiếu khai báo này thì spring sẽ biến thành varchar -> ko lưu dc tiếng việt có dấu. Để String là nvarchar thì cần thêm khai báo @Nationalized
     // Nếu ko, tiếng việt sẽ ra dấu ? thay thế cho dấu '\?/
+    // ta dùng @nationalized của hibernate sẽ mất đi tính khả chuyển khi code này ko thể chơi được với nhà thầu eclipselink
+    // do varchar chơi với nhiều nhà cung cấp orm/jpa qua columnDefinition
+
     private String name;
 
     @Column(name = "Yob",  nullable = false)
