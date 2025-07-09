@@ -10,17 +10,17 @@ import java.util.List;
 
 public class Main {
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.khahnm04.superapp-PU");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.khahnm04.superapp.eclipselink-PU");
 
     public static void main(String[] args) {
         //insertStudents(); // Tạo bảng chèn data qua OOP, code first
-        //getAllStudents(); // select * from theo style OOP, code first
         //insertLecturers();
-        //getAllLecturers();
+        getAllStudents(); // select * from theo style OOP, code first
+        getAllLecturers();
         //searchLecturers();
         //remove();
-        update();
-        findById();
+        //update();
+        //findById();
     }
 
     public static void update() {
@@ -127,7 +127,8 @@ public class Main {
         // Luôn cần có người quản lý các Entity
         // Viết câu SQL theo style Object, gọi là JPQL, HQL khá giống SQL truyền thống nhưng làm việc, select, thao tác trên object, trên các Entity chứ ko quan tâm tên cột trong table như JDBC đã học
 
-        List<Lecturer> result = em.createQuery("SELECT x FROM Lecturer x WHERE x.salary = 20000000", Lecturer.class).getResultList();
+        // List<Lecturer> result = em.createQuery("SELECT x FROM Lecturer x WHERE x.salary = 20000000", Lecturer.class).getResultList();
+        List<Lecturer> result = em.createQuery("SELECT x FROM Lecturer x", Lecturer.class).getResultList();
         // Lecturer là class, từ đó sinh ra object, class Lecturer đã đc map thành table Lecturer ở bên khai báo @Entity
 
         // In KQ:
@@ -224,7 +225,7 @@ public class Main {
 
         // Query này cú pháp giống sql, nhưng theo style OOP, có object và dấu chấm, gọi là JPQL, HQL
         // Hậu trường là select * from Student truyền thống - sẽ in xem nếu khai báo cấu hình trong file .xml
-        List<Student> result = em.createQuery("FROM Student", Student.class).getResultList();
+        List<Student> result = em.createQuery("SELECT x FROM Student x", Student.class).getResultList();
         System.out.println("The list of students (3 record)");
 
         for (Student x : result) {
