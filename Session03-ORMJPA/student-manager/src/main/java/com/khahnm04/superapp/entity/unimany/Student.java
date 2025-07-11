@@ -2,8 +2,8 @@ package com.khahnm04.superapp.entity.unimany;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "Student")
+//@Entity
+//@Table(name = "Student")
 public class Student {
 
     @Id
@@ -29,6 +29,7 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "MajorId")
     private Major major; // làm sao biến này dc set value để nói rằng SV này thuộc major nào??? -> Câu hỏi giống bên major của unione
+    // hàm setMajor() để đưa 1 chuyên ngành cho sv đăng kí vào
 
     public Student() {
     }
@@ -38,6 +39,14 @@ public class Student {
         this.name = name;
         this.yob = yob;
         this.gpa = gpa;
+    }
+
+    public Major getMajor() {
+        return major;
+    }
+
+    public void setMajor(Major major) {
+        this.major = major;
     }
 
     public String getId() {

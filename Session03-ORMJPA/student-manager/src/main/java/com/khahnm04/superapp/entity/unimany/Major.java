@@ -5,8 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Major")
+//@Entity
+//@Table(name = "Major")
 public class Major {
 
     @Id

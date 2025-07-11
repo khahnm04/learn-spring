@@ -40,9 +40,16 @@ public class JpaUtil {
     private JpaUtil() {
     }
 
+    // Hàm trả về factory nếu có nhu cầu cần dùng!!! hầu hết ta không cần dùng factory, mà ta cần thằng này để ra entity manager
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return emf;
+    }
+
+
     // Có ông nhà xưởng EntityManagerFactory rồi, đi mời các ông EntityManager về để quản lý @Entity
     // Hàm này thì nhóm repository sẽ gọi đến để nhờ vả xuống table
     // Vì nó là static nên chấm xài luôn. vd: JpaUtil.getEntityManager();
+    // Hàm chính chuyên quản lý các @Entity
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
