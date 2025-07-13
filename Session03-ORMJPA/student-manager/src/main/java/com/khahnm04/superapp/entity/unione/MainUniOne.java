@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 public class MainUniOne {
 
-    /** Nhờ và JpaUtil, có hàm đọc file persistence.xml để kết nối đúng CSDL, đúng Driver và giúp tạo ra ông quản lí Entity Entity-Manager **/
+    // Nhờ và JpaUtil, có hàm đọc file persistence.xml để kết nối đúng CSDL, đúng Driver và giúp tạo ra ông quản lí Entity Entity-Manager
     public static void main(String[] args) {
         createMajorStudents();
     }
