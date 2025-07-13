@@ -22,13 +22,15 @@ public class Student {
     @Column(name = "Gpa")
     private double gpa;
 
-    // private String majorId // Khoá ngoại đó => SAI
-    // Nghĩ sai: nghĩ theo style Table/CSDL -> Sai, tu duy OOP
-    // Nghĩ đúng, tư duy OOP các Object có mối quan hệ
-    // Tôi Student tham chiếu đến thông tin Major - Object
-    // Có cách để convert từ OOP thành Table/FK, Join column -> ORM Mapping
-    // Cần 1 thằng giúp ánh xạ 2 thế giới để tương thích: JPA/Hibernate
-    // private Major major;
+    /*
+     * private String majorId // Khoá ngoại đó => SAI
+     * Nghĩ sai: nghĩ theo style Table/CSDL -> Sai, tu duy OOP
+     * Nghĩ đúng, tư duy OOP các Object có mối quan hệ
+     * Tôi Student tham chiếu đến thông tin Major - Object
+     * Có cách để convert từ OOP thành Table/FK, Join column -> ORM Mapping
+     * Cần 1 thằng giúp ánh xạ 2 thế giới để tương thích: JPA/Hibernate
+     * private Major major;
+     */
 
     public Student() {
     }
