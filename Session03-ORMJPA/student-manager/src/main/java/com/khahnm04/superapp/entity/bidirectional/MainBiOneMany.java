@@ -52,7 +52,7 @@ public class MainBiOneMany {
         EntityManager em = JpaUtil.getEntityManager();
         em.getTransaction().begin();
         em.persist(se); // Đổ domino (cascade)
-        em.persist(gd);
+        em.persist(gd); // Đổ domino (cascade)
         em.getTransaction().commit();
         em.close();
 

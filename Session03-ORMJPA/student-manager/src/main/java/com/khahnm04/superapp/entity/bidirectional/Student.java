@@ -21,13 +21,14 @@ public class Student {
     @Column(name = "Gpa")
     private double gpa;
 
-    // SV thuộc về 1 Major tại 1 thời điểm => Chỉ cần 1 biến Major, ko phải là Liist như bên kia
-
+    /*
+     * SV thuộc về 1 Major tại 1 thời điểm => Chỉ cần 1 biến Major, ko phải là Liist như bên kia
+     * Cả Major và Student đều có quyền khai báo JoinColumn nếu dùng uni-directional relationship
+     * Giờ làm bi-directional, 2 thằng nhìn qua lại với nhau, thì ta trả quyền giữ JoinColumn về thằng N cho nó giống như góc nhìn table
+     */
     @ManyToOne
-    @JoinColumn(name = "MajorId") // Cả Major và Student đều có quyền khai báo JoinColumn nếu dùng uni-directional relationship
-    // Giờ làm bi-directional, 2 thằng nhìn qua lại với nhau, thì ta trả quyền giữ JoinColumn về thằng N cho nó giống như góc nhìn table
+    @JoinColumn(name = "MajorId")
     private Major major;
-
     public Major getMajor() {
         return major;
     }

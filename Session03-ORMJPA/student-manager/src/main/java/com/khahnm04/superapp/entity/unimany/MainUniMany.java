@@ -19,8 +19,10 @@ public class MainUniMany {
         an.setMajor(se);
         binh.setMajor(se); // 2 SV đi vào, nếu ko thì 2 bên độc lập nhau (2 SV ko thuộc về Major)
 
-        // Xuống DB, phải nhờ JpaUtil, cần có nhà xưởng Factory (kết nối SQL Server), Mướn ông giám đốc giám sát các Entity EntityManager, chuyển xử lý @Entity
-        // Thêm xóa sửa DB thì phải nhớ có Transaction
+        /*
+         * Xuống DB, phải nhờ JpaUtil, cần có nhà xưởng Factory (kết nối SQL Server), Mướn ông giám đốc giám sát các Entity EntityManager, chuyển xử lý @Entity
+         * Thêm xóa sửa DB thì phải nhớ có Transaction
+         */
         EntityManager em = JpaUtil.getEntityManager();
         em.getTransaction().begin();
         em.persist(se); // lưu Major trước
