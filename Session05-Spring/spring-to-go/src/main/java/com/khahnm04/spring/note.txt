@@ -1,0 +1,2 @@
+- các class không trạng thái nên là Bean vì chỉ cần new 1 lần duy nhất tiết kiệm tài nguyên.
+- Những thằng nào là bean chính là singleton
