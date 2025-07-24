@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>Ca va phe - ngay va dem</h1>
+
+    <h2>Anh uống gì tối nay?</h2>
+    <h3 th:text="${cup1}">Đoạn inner-text này bị đè bởi cup1</h3>
+    <h3 th:text="${cup2.getName()}">Đoạn inner-text này bị đè bởi cup2</h3>
+    <h3 th:text="${cup2.getPrice()}">Đoạn inner-text này bị đè bởi cup2</h3>
+
+</body>
+</html>
