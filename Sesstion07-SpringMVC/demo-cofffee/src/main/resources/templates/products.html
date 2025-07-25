@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>The list of products</title>
+</head>
+<body>
+
+    <style>
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+        }
+        tbody tr td:last-child {
+            text-align: center;
+        }
+    </style>
+
+    <h1>Cafe System - The list of products</h1>
+
+    <h2 th:text="${msg}">Chao buoi sang...</h2>
+
+    <h3>The list of coffe products</h3>
+
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr th:each="x : ${products}">
+                <td th:text="${x.id}"></td>
+                <td th:text="${x.name}"></td>
+                <td th:text="${x.price}"></td>
+                <td>
+                    <a th:href="@{'/products/edit/' + ${x.id}}">Update</a> |
+                    <a th:href="@{'/products/delete/' + ${x.id}}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
