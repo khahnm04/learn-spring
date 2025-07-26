@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create | Update coffee product</title>
+</head>
+<body>
+
+<h1>Create | Update coffee product</h1>
+
+<h2 th:text="${khanh.name}">inner text</h2>
+
+<!--<form th:action="@{/update}" th:object="${product}" method="post">-->
+<form th:action="@{/products/edit}" method="post">
+    <p>
+        <label for="id">Product id:</label>
+        <input type="text" name="id" th:value="${khanh.id}" id="id"/>
+    </p>
+    <p>
+        <label for="name">Product name:</label>
+        <input type="text" name="name" th:value="${khanh.name}" id="name"/>
+    </p>
+    <p>
+        <label for="price">Product price:</label>
+        <input type="text" name="price" th:value="${khanh.price}" id="price"/>
+    </p>
+    <p>
+        <button type="submit">Save</button>
+    </p>
+</form>
+
+</body>
+</html>
+
+<!--
+th:text -> in ra
+th:value -> nhét value vào
+-->
