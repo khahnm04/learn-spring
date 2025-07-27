@@ -2,37 +2,207 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create | Update coffee product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe System | Product Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6F4E37; /* Coffee brown */
+            --secondary-color: #C4A484; /* Latte color */
+            --accent-color: #E3B04B; /* Caramel accent */
+            --text-color: #333;
+            --light-bg: #F9F5F0;
+            --white: #FFFFFF;
+            --error-color: #E74C3C;
+            --success-color: #2ECC71;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(227, 176, 75, 0.2);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(111, 78, 55, 0.3);
+        }
+
+        .btn-submit i {
+            font-size: 18px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+
+        .back-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Floating label effect */
+        .float-label {
+            position: relative;
+        }
+
+        .float-label label {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: var(--white);
+            padding: 0 5px;
+        }
+
+        .float-label input:focus + label,
+        .float-label input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            color: var(--accent-color);
+        }
+    </style>
 </head>
 <body>
-
-<h1>Create | Update coffee product</h1>
-
-<h2 th:text="${khanh.name}">inner text</h2>
-
-<!--<form th:action="@{/update}" th:object="${product}" method="post">-->
-<form th:action="@{/products/edit}" method="post">
-    <p>
-        <label for="id">Product id:</label>
-        <input type="text" name="id" th:value="${khanh.id}" id="id"/>
-    </p>
-    <p>
-        <label for="name">Product name:</label>
-        <input type="text" name="name" th:value="${khanh.name}" id="name"/>
-    </p>
-    <p>
-        <label for="price">Product price:</label>
-        <input type="text" name="price" th:value="${khanh.price}" id="price"/>
-    </p>
-    <p>
-        <button type="submit">Save</button>
-    </p>
-</form>
-
+<div class="form-container">
+    <h1>
+        <i class="fas fa-coffee"></i>
+        <span th:text="${khanh.id} ? 'Update Coffee' : 'Create Coffee'"></span>
+    </h1>
+    <h2 th:text="${khanh.name} ? 'Editing: ' + ${khanh.name} : 'Add new product'">Product form</h2>
+    <form th:action="@{/products/edit}" method="post">
+        <div class="form-group float-label">
+            <input type="text" name="id" th:value="${khanh.id}" id="id" placeholder=" " readonly>
+            <label for="id">Product ID</label>
+        </div>
+        <div class="form-group float-label">
+            <input type="text" name="name" th:value="${khanh.name}" id="name" placeholder=" " required>
+            <label for="name">Product Name</label>
+        </div>
+        <div class="form-group float-label">
+            <input type="number" name="price" th:value="${khanh.price}" id="price" placeholder=" " step="0.01" min="0"
+                   required>
+            <label for="price">Price ($)</label>
+        </div>
+        <button type="submit" class="btn-submit">
+            <i class="fas fa-save"></i>
+            <span th:text="${khanh.id} ? 'Update Product' : 'Create Product'"></span>
+        </button>
+        <a href="/products" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to product list
+        </a>
+    </form>
+</div>
 </body>
 </html>
-
-<!--
-th:text -> in ra
-th:value -> nhét value vào
--->

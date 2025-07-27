@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +24,16 @@ import java.util.List;
 @Controller // @RestController: cũng lắng nghe, nhưng trả về Json
 public class ProductController {
 
-    // list nghĩa là show danh sách sản phẩm nằm trong trang products.html
-
-    // @RequestMapping("/products") ->
-    // nguy hiểm 1 chút: url này dành cho cả GET/POST/PUT/ ... miễn match url
-    // ta cần phân tách: hàm nào dành cho GET, hàm nào dành cho POST
-
-    //CÁCH VIẾT CHUẨN, PHAN BIET HÀM NÀO DÀNH CHO GET/POST ... -> DÀI
-    // @RequestMapping(path={"/products", "/jack"}, method = RequestMethod.GET) // url map với hàm này: localhost:6969/product or localhost:6969/jack
-
-    // Cách viết ngắn gọn hơn -> hàm nhận request thuộc nhóm GET
-    // @GetMapping(path = {"/products", "/jack"}) // Có bao nhiêu url map tới hàm này
+    /*
+     * list nghĩa là show danh sách sản phẩm nằm trong trang products.html
+     * @RequestMapping("/products") ->
+     * nguy hiểm 1 chút: url này dành cho cả GET/POST/PUT/ ... miễn match url
+     * ta cần phân tách: hàm nào dành cho GET, hàm nào dành cho POST
+     * CÁCH VIẾT CHUẨN, PHAN BIET HÀM NÀO DÀNH CHO GET/POST ... -> DÀI
+     * @RequestMapping(path={"/products", "/jack"}, method = RequestMethod.GET) // url map với hàm này: localhost:6969/product or localhost:6969/jack
+     * Cách viết ngắn gọn hơn -> hàm nhận request thuộc nhóm GET
+     * @GetMapping(path = {"/products", "/jack"}) // Có bao nhiêu url map tới hàm này
+     */
     @GetMapping("/products")
     public String list(Model model) {
         // gửi đồ cho view
@@ -48,8 +48,13 @@ public class ProductController {
         return "products"; // return tên trang - view (ko cần .html vì tự thymeleaf dependency nó lo gắn thêm)
     }
 
-    // @GetMapping(path = {"/products/edit/CF1", "/products/edit/CF2", "/products/edit/CF3"})
-    // tách url thành 2 phần: 1 phần cố định và 1 phần thay đổi - phần thay đổi gọi là path variable
+    /*
+     * @GetMapping(path = {"/products/edit/CF1", "/products/edit/CF2", "/products/edit/CF3"})
+     * tách url thành 2 phần: 1 phần cố định và 1 phần thay đổi - phần thay đổi gọi là path variable
+     * return "product-form"; -> .html mà ko cần ghi ra
+     * Lệnh return trang luôn đính kèm theo 1 thùng giao hàng, gửi đồ
+     * Theo style "key"-value, chia khoá, mảnh giấy để lấy món đồ trong thùng. Thymeteaf engine dùng chia khoá để mò vào thùng lấy đồ ra mix trộn thành HTML thuần và trả về cho TOMCAT -> BROWSER !!!
+     */
     @GetMapping("/products/edit/{product_id}")
     public String showProductForm(Model model, @PathVariable("product_id") String id) {
         // đã trích dc id muốn xem chi tiết từ click hyperlink của user
@@ -64,18 +69,43 @@ public class ProductController {
         }
         // ném đồ vào thùng  cho trang render
         model.addAttribute("khanh", selectedProduct);
-        return "product-form"; //.html mà ko cần ghi ra
-        //Lệnh return trang luôn đính kèm theo 1 thùng giao hàng, gửi đồ
-        //theo style "key"-value, chia khoá, mảnh giấy để lấy món đồ trong thùng. Thymeteaf engine dùng chia khoá để mò vào thùng lấy đồ ra mix trộn thành HTML thuần và trả về cho TOMCAT -> BROWSER !!!
+        return "product-form";
     }
 
-    // hàm update 1 sản phẩm xuống db, dc gọi bởi việc nhấn nút [save] -> Nhận vào các data gõ trong ô nhập dc gửi lên đây
-    // @RequestParam: gửi từng ô nhập ở form lên server, map vào biến trong hàm, tên biến hứng trong hàm ko cần giống biến trong form,
-    // nhưng @RequestParam("tên-biến-dưới-form-html-ứng-với-thuộc-tính-name-của-ô-nhập")
+    /*
+     * hàm update 1 sản phẩm xuống db, dc gọi bởi việc nhấn nút [save] -> Nhận vào các data gõ trong ô nhập dc gửi lên đây
+     * @RequestParam: gửi từng ô nhập ở form lên server, map vào biến trong hàm, tên biến hứng trong hàm ko cần giống biến trong form,
+     * nhưng @RequestParam("tên-biến-dưới-form-html-ứng-với-thuộc-tính-name-của-ô-nhập")
+     * Với hàm post (bản chất vẫn là get- nhưng gửi nhiều data khi get
+     * Khi hàm post trả về 1 trang kết quả qua lệnh return "tên trang" thì url post vẫn giữ nguyên, trong khi đó thân trình duyệt sẽ có data sẽ trả về
+     * Với post F5 -> trả về KQ, nhưng lại gửi kèm lại đống data ->Resubmitsion form (giống như nhấn lại nút bấm - vì nhấn nút gọi url này) ->Nguy hiểm với tính năng create, F5 màn hình KQ sẽ tương đương việc gửi lại data, chạy lại xử lý -> duplicate data
+     * Với post ta cần đổi url, tránh submit lại khi F5 (url post xử lý xong, return trang và đổi url -> redirect method - định hướng lại url, gọi lại 1 url mới nhưng vẫn cùng KQ trả về)
+     * =>>> IMPORTANT: xử lý post xong đổi url KQ để tránh F5 lại url post (đổi url và F5 và F5 KQ, ko phải F5 post)
+     * với get F5 -> trả về KQ
+     * hiện tượng get y chan: url vẫn giữ nguyên, trong khi đó thân trình duyệt có data dc trả về - trang trả về
+     * Ý nghĩa việc giữ nguyên url: gọi hàm trả về kết qủa ở dưới, tên hàm vẫn ở trên
+     */
     @PostMapping("/products/edit")
-    public String update(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("price") String price, Model model) {
+    public String update(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("price") String price, Model model, RedirectAttributes redirectAtts) {
+        // 2 lệnh model.addAttribute() vô dụng nếu chơi redirect (vì redirect dùng model khác)
         model.addAttribute("msg", "Đã update thành công - Mock Message");
         model.addAttribute("pname", name);
+        // Gửi ké sang model của hàm /msg
+        redirectAtts.addFlashAttribute("msg", "Đã update thành công - Mock Message");
+        redirectAtts.addFlashAttribute("pname", name);
+        //return "result"; // -> Resubmitsion xuất hiện
+        return "redirect:/msg"; // Gọi url: localhost:6969/msg
+    }
+
+    /*
+     * Làm sao để lấy name của bên post (1 url, 1 hàm tương ứng, 1 thùng model mới để bỏ đồ vào trc khi render)
+     * Kỹ thuật chuyển data từ model kia sang model này ở câu lệnh redirect (vì redirect là gọi url mới -> chơi thùng mới
+     * Trước khi redirect gửi ké thêm data từ model cũ sang model mới (từ model của post ké sang model get này)
+     * Model ở đây, ngoài data có chính chủ hàm này, còn nhận thêm từ bên post gửi sang
+     */
+    @GetMapping("/msg")
+    public String showMessage(Model model) {
+
         return "result";
     }
 
