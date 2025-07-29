@@ -1,5 +1,6 @@
 package com.khahnm04.coffee.controller;
 
+import com.khahnm04.coffee.entity.Category;
 import com.khahnm04.coffee.entity.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,6 +70,8 @@ public class ProductController {
         }
         // ném đồ vào thùng  cho trang render
         model.addAttribute("khanh", selectedProduct);
+        // Gửi thêm DS cates
+        model.addAttribute("cates", getCategories());
         return "product-form";
     }
 
@@ -107,6 +110,27 @@ public class ProductController {
     public String showMessage(Model model) {
 
         return "result";
+    }
+
+    /*
+     * chuẩn bị danh sách category -> trả về trang product-form để show DS chọn loại SP
+     * Code chuẩn: phải ở bên categoryService/categoryRepo
+     * hard-code danh sách
+     */
+    public List<Category> getCategories() {
+        return List.of(
+                new Category(100L, "Trà sữa", "..."),
+                new Category(200L, "Cà phê", "..."),
+                new Category(300L, "Beer-nước ngọt", "..."),
+                new Category(400L, "Bánh kẹo", "...")
+        );
+    }
+
+    @GetMapping("/products/create")
+    public String create(Model model) {
+        model.addAttribute("khanh", new Product());
+        model.addAttribute("cates", getCategories());
+        return "product-form";
     }
 
 }
