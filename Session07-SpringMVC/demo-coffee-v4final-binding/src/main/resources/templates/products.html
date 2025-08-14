@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>The main page > List of products</title>
+</head>
+
+<body>
+
+  <!-- Thêm CSS cho dễ nhìn -->
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 10px;
+    }
+  </style>
+
+  <h1>List of new products</h1>
+
+  <p>
+    <a th:href="@{'/products/new'}">New product</a>
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Cate. Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="x : ${products}">
+        <td th:text="${x.id}">???</td>
+        <td th:text="${x.name}">???</td>
+        <td th:text="${x.quantity}">???</td>
+        <td th:text="${x.price}">???</td>
+        <td th:text="${x.cate.name}">???</td>
+        <td>
+          <!-- link edit/delete -->
+          <p>
+            <a th:href="@{'/products/edit/' + ${x.id}}">Update</a> |
+            <a th:href="@{'/products/delete/' + ${x.id}}" onclick="return confirm('Are you sure?');">Delete</a>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+
+</html>
