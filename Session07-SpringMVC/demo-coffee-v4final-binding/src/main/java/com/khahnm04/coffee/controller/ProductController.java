@@ -3,9 +3,11 @@ package com.khahnm04.coffee.controller;
 import com.khahnm04.coffee.entity.Product;
 import com.khahnm04.coffee.service.CategoryService;
 import com.khahnm04.coffee.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +44,15 @@ public class ProductController {
 
     // save
     @PostMapping("/products/save")
-    public String save(@ModelAttribute("selectedOne") Product prod) {
+    public String save(
+        @Valid @ModelAttribute("selectedOne") Product prod,
+        BindingResult bindingResult, Model model
+    ) {
+        // nếu có lỗi trong quá trình binding -> trở lại màn hình nhập
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("cates", categoryService.getAllCategories());
+            return "product-form";
+        }
         productService.saveProduct(prod);
         return "redirect:/products";
     }

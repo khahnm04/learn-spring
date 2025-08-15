@@ -14,18 +14,22 @@
       <label for="id">Id</label>
       <input type="text" id="id" th:field="*{id}">
       <!-- *{id} ~~~ ${selectedOne.id} -->
+      <span th:errors="*{id}" style="color: red"></span>
     </p>
     <p>
       <label for="name">Name</label>
       <input type="text" id="name" th:field="*{name}">
+      <span th:errors="*{name}" style="color: red"></span>
     </p>
     <p>
       <label for="quantity">Quantity</label>
       <input type="text" id="quantity" th:field="*{quantity}">
+      <span th:errors="*{quantity}" style="color: red"></span>
     </p>
     <p>
       <label for="price">Price</label>
       <input type="text" id="price" th:field="*{price}">
+      <span th:errors="*{price}" style="color: red"></span>
     </p>
     <!-- Treo đầu dê bán thịt heo -->
     <!-- <p>
